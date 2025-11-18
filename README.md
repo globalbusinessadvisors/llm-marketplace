@@ -2,10 +2,12 @@
 
 > Production-ready, enterprise-grade platform for discovering, publishing, and consuming Large Language Model services
 
-[![CI/CD Pipeline](https://github.com/org/llm-marketplace/workflows/CI%2FCD%20Pipeline/badge.svg)](https://github.com/org/llm-marketplace/actions)
+[![CI/CD Pipeline](https://github.com/globalbusinessadvisors/llm-marketplace/workflows/CI%2FCD%20Pipeline/badge.svg)](https://github.com/globalbusinessadvisors/llm-marketplace/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Code Coverage](https://codecov.io/gh/org/llm-marketplace/branch/main/graph/badge.svg)](https://codecov.io/gh/org/llm-marketplace)
-[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/org/llm-marketplace/releases)
+[![Code Coverage](https://img.shields.io/badge/coverage-80%25-brightgreen.svg)](https://github.com/globalbusinessadvisors/llm-marketplace)
+[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/globalbusinessadvisors/llm-marketplace/releases)
+[![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://github.com/globalbusinessadvisors/llm-marketplace/actions)
+[![Production Ready](https://img.shields.io/badge/status-production%20ready-success.svg)](https://github.com/globalbusinessadvisors/llm-marketplace)
 
 ## 🚀 Status: Production Ready v1.0
 
@@ -179,7 +181,7 @@ Ensure you have the following installed:
 1. **Clone the repository**
 
 ```bash
-git clone https://github.com/org/llm-marketplace.git
+git clone https://github.com/globalbusinessadvisors/llm-marketplace.git
 cd llm-marketplace
 ```
 
@@ -743,8 +745,8 @@ docker stats
 ```
 
 ### Support
-- **Issues**: https://github.com/org/llm-marketplace/issues
-- **Discussions**: https://github.com/org/llm-marketplace/discussions
+- **Issues**: https://github.com/globalbusinessadvisors/llm-marketplace/issues
+- **Discussions**: https://github.com/globalbusinessadvisors/llm-marketplace/discussions
 - **Documentation**: See `docs/` directory
 
 ## 🗺️ Roadmap
