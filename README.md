@@ -5,7 +5,7 @@
 [![CI/CD Pipeline](https://github.com/globalbusinessadvisors/llm-marketplace/workflows/CI%2FCD%20Pipeline/badge.svg)](https://github.com/globalbusinessadvisors/llm-marketplace/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Code Coverage](https://img.shields.io/badge/coverage-85%25-brightgreen.svg)](https://github.com/globalbusinessadvisors/llm-marketplace)
-[![Version](https://img.shields.io/badge/version-1.1.0-blue.svg)](https://github.com/globalbusinessadvisors/llm-marketplace/releases)
+[![Version](https://img.shields.io/badge/version-1.1.1-blue.svg)](https://github.com/globalbusinessadvisors/llm-marketplace/releases)
 [![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://github.com/globalbusinessadvisors/llm-marketplace/actions)
 [![Production Ready](https://img.shields.io/badge/status-production%20ready-success.svg)](https://github.com/globalbusinessadvisors/llm-marketplace)
 
@@ -337,6 +337,69 @@ curl http://localhost:3006/health  # Tenant Management
 curl http://localhost:3007/health  # Model Marketplace
 curl http://localhost:4000/health  # GraphQL Gateway
 ```
+
+### 📦 NPM Packages
+
+The LLM Marketplace provides official NPM packages for easy integration:
+
+#### Installation
+
+```bash
+# JavaScript/TypeScript SDK (recommended)
+npm install @llm-dev-ops/llm-marketplace-sdk
+
+# Individual service packages
+npm install @llm-dev-ops/llm-marketplace-model-marketplace
+npm install @llm-dev-ops/llm-marketplace-tenant-management
+npm install @llm-dev-ops/llm-marketplace-graphql-gateway
+```
+
+#### Quick Start with SDK
+
+```typescript
+import { LLMMarketplaceClient } from '@llm-dev-ops/llm-marketplace-sdk';
+
+// Initialize the client
+const client = new LLMMarketplaceClient({
+  apiKey: 'your-api-key',
+  baseURL: 'https://api.llm-marketplace.com'
+});
+
+// Discover LLM services
+const services = await client.discovery.searchServices({
+  query: 'text generation',
+  category: 'language-models',
+  limit: 10
+});
+
+// Publish a service
+const service = await client.publishing.publishService({
+  name: 'my-llm-service',
+  version: '1.0.0',
+  description: 'Custom fine-tuned LLM',
+  openApiSpec: { /* OpenAPI 3.1 spec */ }
+});
+
+// Consume a service
+const response = await client.consumption.invoke({
+  serviceId: 'service-id',
+  endpoint: '/v1/chat/completions',
+  payload: { /* request body */ }
+});
+```
+
+#### Package Links
+
+- **SDK**: [npmjs.com/package/@llm-dev-ops/llm-marketplace-sdk](https://www.npmjs.com/package/@llm-dev-ops/llm-marketplace-sdk)
+- **Model Marketplace**: [npmjs.com/package/@llm-dev-ops/llm-marketplace-model-marketplace](https://www.npmjs.com/package/@llm-dev-ops/llm-marketplace-model-marketplace)
+- **Tenant Management**: [npmjs.com/package/@llm-dev-ops/llm-marketplace-tenant-management](https://www.npmjs.com/package/@llm-dev-ops/llm-marketplace-tenant-management)
+- **GraphQL Gateway**: [npmjs.com/package/@llm-dev-ops/llm-marketplace-graphql-gateway](https://www.npmjs.com/package/@llm-dev-ops/llm-marketplace-graphql-gateway)
+
+#### Version
+
+Current version: **1.1.1**
+
+All packages are published under the [@llm-dev-ops](https://www.npmjs.com/org/llm-dev-ops) organization.
 
 ## 📊 Performance Metrics
 
