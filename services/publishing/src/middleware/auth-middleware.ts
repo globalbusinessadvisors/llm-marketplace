@@ -1,6 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
-import { logger } from '../utils/logger';
 
 /**
  * JWT Authentication Middleware
@@ -14,17 +13,7 @@ interface JWTPayload {
   exp: number;
 }
 
-declare global {
-  namespace Express {
-    interface Request {
-      user?: {
-        id: string;
-        email: string;
-        role: string;
-      };
-    }
-  }
-}
+// User type declared in auth.middleware.ts - do not redeclare
 
 export function authenticateToken(
   req: Request,
@@ -35,7 +24,6 @@ export function authenticateToken(
   const token = authHeader && authHeader.split(' ')[1]; // Bearer TOKEN
 
   if (!token) {
-    logger.warn('Authentication failed: No token provided');
     res.status(401).json({
       success: false,
       error: 'Authentication required',
@@ -50,20 +38,11 @@ export function authenticateToken(
     req.user = {
       id: payload.id,
       email: payload.email,
-      role: payload.role,
+      role: payload.role as any, // Matches string type from JWTPayload
     };
-
-    logger.debug('User authenticated', {
-      userId: payload.id,
-      role: payload.role,
-    });
 
     next();
   } catch (error) {
-    logger.warn('Authentication failed: Invalid token', {
-      error: (error as Error).message,
-    });
-
     res.status(403).json({
       success: false,
       error: 'Invalid or expired token',
@@ -85,12 +64,6 @@ export function authorizeRoles(...allowedRoles: string[]) {
     }
 
     if (!allowedRoles.includes(req.user.role)) {
-      logger.warn('Authorization failed: Insufficient permissions', {
-        userId: req.user.id,
-        userRole: req.user.role,
-        requiredRoles: allowedRoles,
-      });
-
       res.status(403).json({
         success: false,
         error: 'Insufficient permissions',

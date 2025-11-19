@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { PublishingService } from '../services/publishing-service';
-import { Service, ServiceStatus } from '../types';
+import { Service } from '../types';
 import { logger } from '../utils/logger';
 
 /**

@@ -3,14 +3,12 @@
  * Database access layer for service-related operations
  */
 
-import { query, queryOne, queryMany, transaction } from '../common/database';
-import { PoolClient } from 'pg';
+import { query, queryOne, queryMany } from '../common/database';
 import {
   Service,
   ServiceStatus,
   ServiceCategory,
   ServiceSearchParams,
-  Provider,
   Capability,
   Endpoint,
   Pricing,

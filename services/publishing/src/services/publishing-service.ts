@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-import { Service, ServiceStatus, PublishingWorkflowContext } from '../types';
+import { Service, ServiceStatus, ServiceCategory, PublishingWorkflowContext } from '../types';
 import { ServiceValidator } from '../validators/service-validator';
 import { OpenAPIValidator } from '../validators/openapi-validator';
 import { RegistryClient } from '../integrations/registry-client';

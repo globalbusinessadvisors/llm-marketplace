@@ -41,7 +41,7 @@ export class DiscoveryServiceClient {
    * ```
    */
   async searchServices(params: SearchServicesParams): Promise<PaginationResponse<Service>> {
-    return this.http.get<PaginationResponse<Service>>(`${this.basePath}/services/search`, params);
+    return this.http.get<PaginationResponse<Service>>(`${this.basePath}/services/search`, params as unknown as Record<string, unknown>);
   }
 
   /**

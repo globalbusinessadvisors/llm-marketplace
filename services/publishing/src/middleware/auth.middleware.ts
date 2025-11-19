@@ -5,7 +5,6 @@
 
 import { Request, Response, NextFunction } from 'express';
 import { AuthenticationError, AuthorizationError } from '../common/errors';
-import { logger } from '../common/logger';
 import * as authService from '../services/auth.service';
 import { UserRole, JWTPayload } from '../models/user.model';
 
@@ -77,7 +76,7 @@ function extractApiKey(req: Request): string | null {
  */
 export async function authenticateJWT(
   req: Request,
-  res: Response,
+  _res: Response,
   next: NextFunction
 ): Promise<void> {
   try {
@@ -106,7 +105,7 @@ export async function authenticateJWT(
  */
 export async function authenticateApiKey(
   req: Request,
-  res: Response,
+  _res: Response,
   next: NextFunction
 ): Promise<void> {
   try {
@@ -141,7 +140,7 @@ export async function authenticateApiKey(
  */
 export async function authenticate(
   req: Request,
-  res: Response,
+  _res: Response,
   next: NextFunction
 ): Promise<void> {
   try {
@@ -208,12 +207,21 @@ export async function optionalAuthenticate(
  * Require specific role (middleware factory)
  */
 export function requireRole(requiredRole: UserRole) {
-  return (req: Request, res: Response, next: NextFunction): void => {
+  return (req: Request, _res: Response, next: NextFunction): void => {
     if (!req.user) {
       return next(new AuthenticationError('Authentication required'));
     }
 
-    const hasRequiredRole = authService.hasRole(req.user, requiredRole);
+    // Check role hierarchy
+    const roleHierarchy: Record<UserRole, number> = {
+      [UserRole.ADMIN]: 4,
+      [UserRole.PROVIDER]: 3,
+      [UserRole.CONSUMER]: 2,
+      [UserRole.VIEWER]: 1,
+    };
+    const userRoleLevel = roleHierarchy[req.user.role as UserRole];
+    const requiredRoleLevel = roleHierarchy[requiredRole];
+    const hasRequiredRole = userRoleLevel >= requiredRoleLevel;
 
     if (!hasRequiredRole) {
       return next(
@@ -231,7 +239,7 @@ export function requireRole(requiredRole: UserRole) {
  * Require specific permission (middleware factory)
  */
 export function requirePermission(permission: string) {
-  return (req: Request, res: Response, next: NextFunction): void => {
+  return (req: Request, _res: Response, next: NextFunction): void => {
     if (!req.user) {
       return next(new AuthenticationError('Authentication required'));
     }
@@ -242,7 +250,20 @@ export function requirePermission(permission: string) {
     }
 
     // Check role-based permissions
-    const hasPermission = authService.hasPermission(req.user.role, permission);
+    const permissions: Record<UserRole, string[]> = {
+      [UserRole.ADMIN]: ['*'], // All permissions
+      [UserRole.PROVIDER]: [
+        'service:create',
+        'service:read',
+        'service:update',
+        'service:delete',
+        'service:publish',
+      ],
+      [UserRole.CONSUMER]: ['service:read', 'service:consume'],
+      [UserRole.VIEWER]: ['service:read'],
+    };
+    const userPermissions = permissions[req.user.role as UserRole] || [];
+    const hasPermission = userPermissions.includes('*') || userPermissions.includes(permission);
 
     if (!hasPermission) {
       return next(
@@ -260,7 +281,7 @@ export function requirePermission(permission: string) {
  * Require resource ownership (user can only access their own resources)
  */
 export function requireOwnership(getUserIdFromRequest: (req: Request) => string) {
-  return (req: Request, res: Response, next: NextFunction): void => {
+  return (req: Request, _res: Response, next: NextFunction): void => {
     if (!req.user) {
       return next(new AuthenticationError('Authentication required'));
     }
@@ -287,7 +308,7 @@ export function requireOwnership(getUserIdFromRequest: (req: Request) => string)
  */
 export async function checkRateLimit(
   req: Request,
-  res: Response,
+  _res: Response,
   next: NextFunction
 ): Promise<void> {
   try {
@@ -295,7 +316,7 @@ export async function checkRateLimit(
       return next();
     }
 
-    const identifier = req.user.id;
+    // const identifier = req.user.id;
     // Rate limiting logic would go here
     // For now, just pass through
 

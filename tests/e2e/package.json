@@ -4,6 +4,7 @@
   "description": "End-to-end tests for LLM-Marketplace platform",
   "private": true,
   "scripts": {
+    "build": "echo 'E2E tests do not require a build step'",
     "test": "jest --runInBand --verbose",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",

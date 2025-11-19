@@ -44,7 +44,7 @@ export class PublishingWorkflowActivities {
   /**
    * Activity: Validate OpenAPI specification
    */
-  async validateOpenAPISpec(spec: Record<string, unknown>): Promise<ValidationResult> {
+  async validateOpenAPISpec(_spec: Record<string, unknown>): Promise<ValidationResult> {
     logger.info('Workflow Activity: Validating OpenAPI specification');
 
     // This would call the OpenAPIValidator
@@ -498,7 +498,7 @@ export class DeprecationWorkflow {
 
   async execute(
     serviceId: string,
-    reason: string,
+    _reason: string,
     gracePeriodDays: number = 30
   ): Promise<void> {
     logger.info('Starting Deprecation Workflow', {

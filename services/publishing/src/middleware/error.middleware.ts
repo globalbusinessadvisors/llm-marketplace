@@ -5,8 +5,8 @@
 
 import { Request, Response, NextFunction } from 'express';
 import { AppError, formatErrorResponse, isOperationalError } from '../common/errors';
-import { logger, logError } from '../common/logger';
-import { config, isDevelopment } from '../config';
+import { logError } from '../common/logger';
+import { isDevelopment } from '../config';
 import { ZodError } from 'zod';
 
 /**
@@ -16,7 +16,7 @@ export function errorHandler(
   err: Error,
   req: Request,
   res: Response,
-  next: NextFunction
+  _next: NextFunction
 ): void {
   // Log error
   logError(err, {
@@ -56,9 +56,7 @@ export function errorHandler(
   }
 
   // Handle unexpected errors
-  logger.error('Unexpected error occurred', {
-    error: err.message,
-    stack: err.stack,
+  logError(err, {
     operational: isOperationalError(err),
   });
 

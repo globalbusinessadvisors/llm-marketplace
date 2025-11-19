@@ -115,7 +115,7 @@ export class PublishingServiceClient {
    * ```
    */
   async listServices(params?: ListServicesParams): Promise<PaginationResponse<Service>> {
-    return this.http.get<PaginationResponse<Service>>(`${this.basePath}/services`, params);
+    return this.http.get<PaginationResponse<Service>>(`${this.basePath}/services`, params as Record<string, unknown>);
   }
 
   /**

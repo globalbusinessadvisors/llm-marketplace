@@ -3,8 +3,7 @@
  * Database access layer for user-related operations
  */
 
-import { v4 as uuidv4 } from 'uuid';
-import { query, queryOne, transaction } from '../common/database';
+import { query, queryOne } from '../common/database';
 import { User, UserRole, UserStatus, ApiKey } from '../models/user.model';
 import { DatabaseError, NotFoundError } from '../common/errors';
 

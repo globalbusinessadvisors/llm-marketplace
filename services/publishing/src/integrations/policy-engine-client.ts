@@ -6,10 +6,10 @@ import { logger } from '../utils/logger';
  * In production, this would use @grpc/grpc-js or similar
  */
 export class PolicyEngineClient {
-  private readonly serverAddress: string;
+  // private readonly serverAddress: string;
 
   constructor() {
-    this.serverAddress = process.env.POLICY_ENGINE_GRPC_URL || 'localhost:50051';
+    // this.serverAddress = process.env.POLICY_ENGINE_GRPC_URL || 'localhost:50051';
   }
 
   /**
@@ -88,7 +88,7 @@ export class PolicyEngineClient {
   async validateConsumption(
     consumerId: string,
     serviceId: string,
-    request: Record<string, unknown>
+    _request: Record<string, unknown>
   ): Promise<{ allowed: boolean; reason?: string }> {
     try {
       logger.debug('Validating consumption request', {

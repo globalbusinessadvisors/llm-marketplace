@@ -97,11 +97,11 @@ export class AnalyticsClient {
     data: Record<string, unknown>
   ): Promise<void> {
     try {
-      const event = {
-        eventType,
-        timestamp: new Date().toISOString(),
-        ...data,
-      };
+      // const event = {
+      //   eventType,
+      //   timestamp: new Date().toISOString(),
+      //   ...data,
+      // };
 
       // In production:
       // await this.producer.send({

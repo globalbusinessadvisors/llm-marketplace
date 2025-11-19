@@ -14,7 +14,9 @@ if (logFormat === 'json') {
 } else {
   formats.push(
     winston.format.printf(({ level, message, timestamp, metadata }) => {
-      const meta = Object.keys(metadata).length ? JSON.stringify(metadata) : '';
+      const meta = metadata && typeof metadata === 'object' && Object.keys(metadata).length
+        ? JSON.stringify(metadata)
+        : '';
       return `${timestamp} [${level.toUpperCase()}]: ${message} ${meta}`;
     })
   );

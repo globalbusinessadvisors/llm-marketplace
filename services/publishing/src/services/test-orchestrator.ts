@@ -9,11 +9,11 @@ import axios from 'axios';
 
 export class TestOrchestrator {
   private readonly testTimeout: number;
-  private readonly maxRetries: number;
+  // private readonly maxRetries: number;
 
   constructor() {
     this.testTimeout = parseInt(process.env.TEST_TIMEOUT_MS || '30000', 10);
-    this.maxRetries = parseInt(process.env.TEST_MAX_RETRIES || '3', 10);
+    // this.maxRetries = parseInt(process.env.TEST_MAX_RETRIES || '3', 10);
   }
 
   /**
@@ -100,7 +100,7 @@ export class TestOrchestrator {
       const performanceTest = await this.testResponseTime(service);
       tests.push(performanceTest);
 
-      const passed = tests.filter((t) => t.status === 'passed').length;
+      // const passed = tests.filter((t) => t.status === 'passed').length;
       const failed = tests.filter((t) => t.status === 'failed').length;
       const skipped = tests.filter((t) => t.status === 'skipped').length;
 
@@ -333,7 +333,7 @@ export class TestOrchestrator {
     }
   }
 
-  private async testApiResponse(service: Service): Promise<TestResult['tests'][0]> {
+  private async testApiResponse(_service: Service): Promise<TestResult['tests'][0]> {
     const startTime = Date.now();
 
     try {
@@ -357,7 +357,7 @@ export class TestOrchestrator {
     }
   }
 
-  private async testErrorHandling(service: Service): Promise<TestResult['tests'][0]> {
+  private async testErrorHandling(_service: Service): Promise<TestResult['tests'][0]> {
     const startTime = Date.now();
 
     try {
@@ -443,7 +443,7 @@ export class TestOrchestrator {
     }
   }
 
-  private async benchmarkThroughput(service: Service): Promise<PerformanceBenchmark['metrics'][0]> {
+  private async benchmarkThroughput(_service: Service): Promise<PerformanceBenchmark['metrics'][0]> {
     try {
       // Mock throughput test
       const throughput = 1000 + Math.random() * 500; // Mock: 1000-1500 req/s

@@ -6,7 +6,7 @@
 import { Request, Response } from 'express';
 import * as serviceRepository from '../repositories/service.repository';
 import { asyncHandler } from '../middleware/error.middleware';
-import { logger, logAudit } from '../common/logger';
+import { logAudit } from '../common/logger';
 import {
   createServiceSchema,
   updateServiceSchema,
@@ -213,7 +213,7 @@ export const getServiceVersions = asyncHandler(async (req: Request, res: Respons
  * GET /services/statistics
  * Get service statistics
  */
-export const getStatistics = asyncHandler(async (req: Request, res: Response) => {
+export const getStatistics = asyncHandler(async (_req: Request, res: Response) => {
   const stats = await serviceRepository.getStatistics();
 
   res.status(200).json({

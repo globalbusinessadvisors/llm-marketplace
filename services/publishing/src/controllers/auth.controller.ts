@@ -6,7 +6,6 @@
 import { Request, Response } from 'express';
 import * as authService from '../services/auth.service';
 import { asyncHandler } from '../middleware/error.middleware';
-import { logger } from '../common/logger';
 
 /**
  * POST /auth/register

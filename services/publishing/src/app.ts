@@ -7,7 +7,6 @@ import express, { Application } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import { config } from './config';
-import { logger } from './common/logger';
 import { correlationId, requestLogger } from './middleware/logging.middleware';
 import { errorHandler, notFoundHandler } from './middleware/error.middleware';
 import routes from './routes';
@@ -39,7 +38,7 @@ export function createApp(): Application {
   app.use(`/api/${config.server.apiVersion}`, routes);
 
   // Root endpoint
-  app.get('/', (req, res) => {
+  app.get('/', (_req, res) => {
     res.json({
       service: config.server.name,
       version: config.server.version,

@@ -239,7 +239,18 @@ export interface UpdateServiceRequest {
 /**
  * List services parameters
  */
-export interface ListServicesParams extends PaginationParams {
+export interface ListServicesParams {
+  /**
+   * Maximum number of items to return
+   * @default 10
+   */
+  limit?: number;
+
+  /**
+   * Cursor for pagination
+   */
+  cursor?: string;
+
   /**
    * Filter by category
    */
@@ -269,7 +280,18 @@ export interface ListServicesParams extends PaginationParams {
 /**
  * Search services parameters
  */
-export interface SearchServicesParams extends PaginationParams {
+export interface SearchServicesParams {
+  /**
+   * Maximum number of items to return
+   * @default 10
+   */
+  limit?: number;
+
+  /**
+   * Cursor for pagination
+   */
+  cursor?: string;
+
   /**
    * Search query
    */

@@ -12,17 +12,15 @@ import { logger, logAuth, logAudit } from '../common/logger';
 import {
   AuthenticationError,
   AuthorizationError,
-  ValidationError,
   ConflictError,
   NotFoundError,
 } from '../common/errors';
-import { setSession, getSession, deleteSession } from '../common/redis';
+import { setSession } from '../common/redis';
 import {
   User,
   UserRole,
   UserStatus,
   UserDTO,
-  ApiKey,
   ApiKeyDTO,
   JWTPayload,
   AuthResponse,
@@ -224,7 +222,7 @@ export async function verifyAccessToken(token: string): Promise<JWTPayload> {
  * Generate access token
  */
 function generateAccessToken(user: User): string {
-  const payload: JWTPayload = {
+  const payload: Omit<JWTPayload, 'iat' | 'exp'> = {
     sub: user.id,
     email: user.email,
     role: user.role,
@@ -235,14 +233,14 @@ function generateAccessToken(user: User): string {
     expiresIn: config.jwt.expiresIn,
     issuer: config.jwt.issuer,
     audience: config.jwt.audience,
-  });
+  } as jwt.SignOptions);
 }
 
 /**
  * Generate refresh token
  */
 function generateRefreshToken(user: User): string {
-  const payload: JWTPayload = {
+  const payload: Omit<JWTPayload, 'iat' | 'exp'> = {
     sub: user.id,
     email: user.email,
     role: user.role,
@@ -253,7 +251,7 @@ function generateRefreshToken(user: User): string {
     expiresIn: config.jwt.refreshExpiresIn,
     issuer: config.jwt.issuer,
     audience: config.jwt.audience,
-  });
+  } as jwt.SignOptions);
 }
 
 /**
